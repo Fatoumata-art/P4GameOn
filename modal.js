@@ -14,38 +14,35 @@ const modalBtn = document.querySelectorAll(".modal-btn");
 const modalBtn2 = document.querySelectorAll(".modal-btn2");
 const formData = document.querySelectorAll(".formData");
 
-// launch modal event
-modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
-modalBtn2.forEach((btn) => btn.addEventListener("change", launchModal2));
+var validalidation = document.getElementById('send_button');
+var fname = document.getElementById('first-name');
+var m_fname = document.getElementById('missing_fname');
 
+// launch modal event
+validalidation.addEventListener("submit", validateForm);
+modalBtn.forEach((btn) => {btn.addEventListener("click", launchModal)});
+// modalBtn2.forEach((btn) => btn.addEventListener("click", launchModal2));
 // launch modal form
 function launchModal() {
   modalbg.style.display = "block";
 }
 
-function launchModal2() {
-  modalbg2.style.display = "block";
-}
-
-
-// emptyField
-
-function emptyField(x){
-  var field = document.getElementById(x);
-  if( field.value !== ""){
-    field.style.borderColor = "red";
-   
-  }
-}
+// function launchModal2() {
+//   modalbg2.style.display = "block";
+// }
 
 // form validalidation
 
-function validateForm(){
-  let x = document.forms["reserve"]["first-name"].value;
-  if (x == ""){
-    // alert("Merci de renseigner votre Prénom");
-    document.getElementsByClassName("text-control");
-    return false;
+function validateForm(e){
+  console.log('JJJJJJJJJJJJJJJJJJJJJJJJJJJ')
+  e.preventDefault();
+  
+  if (fname.value === ''|| fname.value == false){
+    // bloquer l'envoi du form
+    e.preventDefault();
+    m_fname.push("Prénom manquant");
+    m_fname.style.color = "red";
+  //  field.style.borderColor = "red";
   }
 }
 
