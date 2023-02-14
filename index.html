@@ -63,23 +63,25 @@
             <form name="reserve" action="" method="post">
               <div class="formData">
                 <label for="fist-name">Prénom</label><br>
-                <input class="text-control" type="text" id="first" name="first-name" minlength="2" ><br>
+                <input class="text-control" type="text" id="first" name="first-name" minlength="2" required="required"><br>
                 <span id="missing_fname"></span>
               </div>
               <div class="formData">
                 <label for="last-name">Nom</label><br>
-                <input class="text-control" type="text" id="last" name="last" onblur='emptyField("last")'><br>
+                <input class="text-control" type="text" id="last" name="last"required="required"><br>
+                <span id="missing_last-name"></span>
               </div>
               <div class="formData">
                 <label for="e-mail">E-mail</label><br>
                 <input class="text-control" type="email" id="email" name="email" onblur='emptyField("email")'><br>
+                <span id="missing_email"></span>
               </div>
               <div class="formData">
                 <label for="birthdate">Date de naissance</label><br>
                 <input class="text-control" type="date" id="birthdate" name="birthdate" onblur='emptyField("birthdate")'><br>
+                <span id="missing_birthdate"></span>
               </div>
-              <div
-                class="formData">
+              <div class="formData">
                 <label for="quantity">À combien de tournois GameOn avez-vous déjà participé ?</label><br>
                 <input type="number" class="text-control" id="quantity" onblur='emptyField("quantity")' name="quantity" min="0" max="99">
               </div>
