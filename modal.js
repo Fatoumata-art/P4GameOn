@@ -11,27 +11,26 @@ function editNav() {
 const modalbg = document.querySelector(".bground");
 const modalbg2 = document.getElementById("modalbg2")
 const modalBtn = document.querySelectorAll(".modal-btn");
-const modalBtn2 = document.querySelectorAll(".modal-btn2");
+
+const validalidation = document.forms["reserve"];
 const formData = document.querySelectorAll(".formData");
-const closeBtn = document.querySelectorAll("[data-close-modal]");
+const closeBtn = document.querySelectorAll(".close");
+var msgError = document.getElementById('msgError')
+var fname = document.getElementById("fname");
+var l_name = document.getElementById("last");
+var email = document.getElementById("email");
+var birthdate = document.getElementById("birthdate");
 
-var validalidation = document.getElementById('send_button');
-var fname = document.getElementById('first-name');
-var m_fname = document.getElementById('missing_fname');
-var l_name = document.getElementById('last-name');
-var m_l_name = document.getElementById('missing_last-name');
-var email = document.getElementById('email');
-var m_email = document.getElementById('missing_email');
-var ddn = document.getElementById('birthdate');
-var m_ddn = document.getElementById('missing_birthdate');
-
-var nameRGEX = 
 
 // launch modal event
-validalidation.addEventListener("submit", validateForm);
 modalBtn.forEach((btn) => {btn.addEventListener("click", launchModal)});
 closeBtn.forEach((btn) => btn.addEventListener("click", closeModal));
+validalidation.addEventListener("submit", e => {
+  e.preventDefault();
 
+  validateForm();
+});
+  
 
 // launch modal form
 function launchModal() {
@@ -40,19 +39,72 @@ function launchModal() {
 
 function closeModal(){
   modalbg.style.display = "none";
-  resetModal();
+ 
 }
 
+const setError = (element, message) => {
+  const inputControl = element.parentElement;
+  const errorDisplay = inputControl.querySelector('.msgError');
 
-// form validalidation
+  errorDisplay.innerHTML  = message;
+  errorDisplay.classList.add("text-danger")
+  errorDisplay.classList.remove("text-success")
+}
 
-function validateForm(e){
-  if (fname.value === ''|| fname.value == false){
-    // bloquer l'envoi du form
-    e.preventDefault();
-    m_fname.push("Prénom manquant");
-    m_fname.style.color = "red";
-  //  field.style.borderColor = "red";
+const setSuccess = element => {
+  const inputControl = element.parentElement;
+  const errorDisplay = inputControl.querySelector('.msgError');
+
+  errorDisplay.innerHTML  = '';
+  errorDisplay.classList.add("text-danger")
+  errorDisplay.classList.remove("text-success")
+
+  
+}
+
+function validateForm(){
+  const fnameValue = fname.value.trim();
+  const l_nameValue = l_name.value.trim();
+  const emailValue = email.value.trim();
+  const birthdateValue = birthdate.value.trim();
+
+  if(fnameValue === ''){
+    setError(fname, 'Veiller renseigner le Prénom');
+  }else{
+    setSuccess(fname);
+  }
+
+  if(l_nameValue === ''){
+    setError(l_name, 'Veiller renseigner le nom');
+  }else{
+    setSuccess(l_name);
+  }
+
+  if(emailValue === ''){
+    setError(email, 'Veiller renseigner le email');
+  }else if(!validerEmail(emailValue)){
+    setError(email, 'Veuillez entrer une adresse e-mail valide')
+  }
+  else{
+    setSuccess(email);
+  }
+
+  if(birthdateValue === ''){
+    setError(birthdate, 'Veiller renseigner le ddn');
+  }else{
+    setSuccess(birthdate);
   }
 }
 
+// Validation adresse mail par RegEx, plus fiable que le contrôle HTML
+function validerEmail(email) {
+  let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+};
+
+// function ControleBithdate() {
+//   if (birthdate.validity.valid) {
+//     setError(birthdate, 'Veuillez entrer une date valide');
+    
+//   };
+// };
