@@ -21,9 +21,16 @@ var l_name = document.getElementById("last");
 var email = document.getElementById("email");
 var birthdate = document.getElementById("birthdate");
 
+// Ticket #2 Finaliser le formulaire //
+// Les champs autres que radio et checkbox sont contrôlés par HTML5
+// Déclaration des éleménts DOM utilisés
+const BtnRadio = document.getElementsByName('location');
+const CheckCondition = document.getElementById('checkbox1');
 
 // launch modal event
 modalBtn.forEach((btn) => {btn.addEventListener("click", launchModal)});
+
+//Ticket #1 - Evénement 'click' sur bouton fermeture
 closeBtn.forEach((btn) => btn.addEventListener("click", closeModal));
 validalidation.addEventListener("submit", e => {
   e.preventDefault();
@@ -36,7 +43,7 @@ validalidation.addEventListener("submit", e => {
 function launchModal() {
   modalbg.style.display = "block";
 }
-
+//Ticket #1 - Evénement 'click' sur bouton fermeture
 function closeModal(){
   modalbg.style.display = "none";
  
@@ -76,7 +83,10 @@ function validateForm(){
 
   if(l_nameValue === ''){
     setError(l_name, 'Veiller renseigner le nom');
-  }else{
+}
+else if(!validerEmail(l_nameValue)){
+  setError(l_name, 'Veuillez entrer 2 caractères ou plus pour le champ du nom.')
+}else{
     setSuccess(l_name);
   }
 
@@ -95,6 +105,15 @@ function validateForm(){
     setSuccess(birthdate);
   }
 }
+
+// Ticket #3 Validation des champs <input> via l'API de validation JS pour utiliser les contraintes HTML
+// par ajout d'un attribut (utilisation du CSS fourni)
+// Sauf pour les champs Prénom, Nom et E-mail pas suffisemment fiables (utilisation de REGEX)
+
+function validerName(l_name) {
+  let regexName = /^[a-zA-Z]+(([- ])?[a-zA-Z])+$/;
+  return regexName.test(l_name);
+};
 
 // Validation adresse mail par RegEx, plus fiable que le contrôle HTML
 function validerEmail(email) {
