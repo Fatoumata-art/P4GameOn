@@ -529,3 +529,19 @@ footer {
   }
 }
 
+/* Nouveau breakpoint pur les "petits" écrans  */
+@media screen and (max-width:450px) {
+  .hero-headline {
+    font-size: 38px;
+    width: 85%;
+    text-align: left;
+  }
+  .hero-text {
+    width: 90%;
+    font-size: 0.8rem;
+    margin-top: 20px;
+
+}
+
+
+
