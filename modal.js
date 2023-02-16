@@ -64,8 +64,8 @@ const setSuccess = element => {
   const errorDisplay = inputControl.querySelector('.msgError');
 
   errorDisplay.innerHTML  = '';
-  inputControl.classList.add("error")
-  inputControl.classList.remove("success")
+  inputControl.classList.add("success")
+  inputControl.classList.remove("error")
 
   
 }
@@ -86,7 +86,7 @@ function validateForm(){
   if(l_nameValue === ''){
     setError(l_name, 'Veiller renseigner le nom');
 }
-else if(!validerEmail(l_nameValue)){
+else if(!validerName(l_nameValue)){
   setError(l_name, 'Veuillez entrer 2 caractères ou plus pour le champ du nom.')
 }else{
     setSuccess(l_name);
