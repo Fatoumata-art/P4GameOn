@@ -20,8 +20,9 @@ var fname = document.getElementById("fname");
 var l_name = document.getElementById("last");
 var email = document.getElementById("email");
 var birthdate = document.getElementById("birthdate");
+var nberQuantity = document.getElementById("quantity");
 
-// Ticket #2 Finaliser le formulaire //
+// Task #2 Finaliser le formulaire //
 // Les champs autres que radio et checkbox sont contrôlés par HTML5
 // Déclaration des éleménts DOM utilisés
 const BtnRadio = document.getElementsByName('location');
@@ -30,7 +31,7 @@ const CheckCondition = document.getElementById('checkbox1');
 // launch modal event
 modalBtn.forEach((btn) => {btn.addEventListener("click", launchModal)});
 
-//Ticket #1 - Evénement 'click' sur bouton fermeture
+//Task #1 - Evénement 'click' sur bouton fermeture
 closeBtn.forEach((btn) => btn.addEventListener("click", closeModal));
 validalidation.addEventListener("submit", e => {
   e.preventDefault();
@@ -43,7 +44,7 @@ validalidation.addEventListener("submit", e => {
 function launchModal() {
   modalbg.style.display = "block";
 }
-//Ticket #1 - Evénement 'click' sur bouton fermeture
+//Task #1 - Evénement 'click' sur bouton fermeture
 function closeModal(){
   modalbg.style.display = "none";
  
@@ -54,8 +55,8 @@ const setError = (element, message) => {
   const errorDisplay = inputControl.querySelector('.msgError');
 
   errorDisplay.innerHTML  = message;
-  errorDisplay.classList.add("text-danger")
-  errorDisplay.classList.remove("text-success")
+  inputControl.classList.add("error")
+  inputControl.classList.remove("success")
 }
 
 const setSuccess = element => {
@@ -63,8 +64,8 @@ const setSuccess = element => {
   const errorDisplay = inputControl.querySelector('.msgError');
 
   errorDisplay.innerHTML  = '';
-  errorDisplay.classList.add("text-danger")
-  errorDisplay.classList.remove("text-success")
+  inputControl.classList.add("error")
+  inputControl.classList.remove("success")
 
   
 }
@@ -74,6 +75,7 @@ function validateForm(){
   const l_nameValue = l_name.value.trim();
   const emailValue = email.value.trim();
   const birthdateValue = birthdate.value.trim();
+  const nberQuantityValue = nberQuantity.value.trim();
 
   if(fnameValue === ''){
     setError(fname, 'Veiller renseigner le Prénom');
@@ -104,9 +106,15 @@ else if(!validerEmail(l_nameValue)){
   }else{
     setSuccess(birthdate);
   }
+
+  if(nberQuantityValue === ''){
+    setError(nberQuantity, 'Veuillez entrer une valeur entre 0 et 99');
+  }else{
+    setSuccess(nberQuantity);
+  }
 }
 
-// Ticket #3 Validation des champs <input> via l'API de validation JS pour utiliser les contraintes HTML
+// Task #3 Validation des champs <input> via l'API de validation JS pour utiliser les contraintes HTML
 // par ajout d'un attribut (utilisation du CSS fourni)
 // Sauf pour les champs Prénom, Nom et E-mail pas suffisemment fiables (utilisation de REGEX)
 
