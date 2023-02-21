@@ -9,7 +9,6 @@ function editNav() {
 
 // DOM Elements
 const modalbg = document.querySelector(".bground");
-const modalbg2 = document.getElementById("modalbg2")
 const modalBtn = document.querySelectorAll(".modal-btn");
 
 const validalidation = document.forms["reserve"];
@@ -23,7 +22,14 @@ let birthdate = document.getElementById("birthdate");
 let nberQuantity = document.getElementById("quantity");
 let BtnRadio = document.getElementsByName('location');
 let CheckCondition = document.getElementById('checkbox1');
-let valid = false;
+let checkNewsLetter = document.getElementById('checkbox2');
+let fnameValid = false;
+let l_nameValid = false;
+let emailValid = false;
+let birthdateValid = false;
+let nberQuantityValid = false;
+let BtnRadioValid = false;
+let CheckConditionValid = false;
 
 
 // launch modal event
@@ -60,34 +66,36 @@ const setSuccess = element => {
 
 // control entre de prénom
 fname.addEventListener("change", (e) => {
+  console.log(fname.value);
   if(fname.value == ''){
     setError(fname, 'Veuillez renseigner le Prénom');
     e.preventDefault();
 }
-else if(fname.value.length <=2){
+else if(fname.value.length <= 2){
   setError(fname, 'Veuillez entrer 2 caractères ou plus pour le champ du Prénom.')
   e.preventDefault();
 }else{
     setSuccess(fname);
-    valid = true;
+    fnameValid = true;
 }
 })
 
 // control entre du nom
 l_name.addEventListener("change", (e) => {
+  console.log(l_name.value);
   if(l_name.value == ''){
     setError(l_name, 'Veuillez renseigner le Nom');
     e.preventDefault();
 }else{
     setSuccess(l_name);
-    valid = true;
+    l_nameValid = true;
 }
 })
 
 // control entre de prénom
 function validEmail(email) {
-  let regexName = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return regexName.test(email);
+  let regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  return regexEmail.test(String(email).toLowerCase());
 };
 email.addEventListener("change", (e) => {
   console.log(email.value);
@@ -100,55 +108,89 @@ email.addEventListener("change", (e) => {
     e.preventDefault();
   }else{
       setSuccess(email);
-      valid = true;
+      emailValid = true;
   }
   })
 
   // control entre de date de naissance
+  function validBirthday(birthdate) {
+    let dateRegex = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/;
+    return dateRegex.test(birthdate);
+  }
   birthdate.addEventListener("change", (e) => {
-    if (!birthdate.validity.valid) {
+    console.log(birthdate.value);
+     if(!validBirthday(birthdate.value)) // (!dateRegex.test(birthdate)) 
+    {
       setError(birthdate, 'Veuillez entrer une date valide');
+      e.preventDefault;
     }else{
       setSuccess(birthdate);
-      valid = true;
+      birthdateValid = true;
     }
     })
 
     // control entre du nombre de participation
     nberQuantity.addEventListener("change", (e) => {
+      console.log(nberQuantity.value);
   if(nberQuantity.value == ''){
     setError(nberQuantity, 'Veuillez entrer une valeur entre 0 et 99');
     e.preventDefault();
 }else{
     setSuccess(nberQuantity);
-    valid = true;
+    nberQuantityValid = true;
 }
 })
 
+// control ville coché
+// let j = 0;
+// for (var i = 0; i < BtnRadio.length; i++) {
+//   BtnRadio[i].addEventListener('change', function() {
 
-//function form validation
-function validateForm(){
- 
-  if(l_nameValue === ''){
-    setError(l_name, 'Veuillez renseigner le Prénom');
-  }else{
-    setSuccess(l_name);
-  };
-  
 
-  if(birthdateValue === ''){
-    setError(birthdate, 'Veillez renseigner le ddn');
-  }else{
-    setSuccess(birthdate);
-  }
+//   if (BtnRadio[i].checked){
+//     j++
+//   }
+//   if(j > 0){
+//    BtnRadioValid = true;
+// }
+// else{
+//   setError(BtnRadio, 'Veuillez sélectionner une ville.')
+// } 
+// })
+// };
 
-  if(nberQuantityValue === ''){
-    setError(nberQuantity, 'Veuillez entrer une valeur entre 0 et 99');
+
+
+//condition d'utilisation
+function Conditions() {
+  if (CheckCondition.checked = false) {
+    setError(CheckCondition, 'Veuillez accepter les conditions d\'utilisation.');
+   
   }else{
-    setSuccess(nberQuantity);
-  }
+
+    CheckConditionValid = true;
+  } 
 }
 
+//Abonnement newsletter
+function NewsLetter() {
+  if (checkNewsLetter.checked) {
+   // checkNewsLetterValid = true;
+  } 
+  }
+
+  //submit form event if valide
+validalidation.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+ 
+if(fnameValid === true && l_nameValid === true && emailValid === true && birthdateValid === true && 
+  nberQuantityValid === true &&  CheckConditionValid === true) {
+  alert('Formulaire VALIDE');
+}else{
+  alert('Formulaire pas VALIDE');
+}
+
+})
 
   
-
