@@ -21,6 +21,7 @@ let email = document.getElementById("email");
 let birthdate = document.getElementById("birthdate");
 let nberQuantity = document.getElementById("quantity");
 let BtnRadio = document.getElementsByName('location');
+console.log("BABABABABABAAB ", BtnRadio)
 let CheckCondition = document.getElementById('checkbox1');
 let checkNewsLetter = document.getElementById('checkbox2');
 let fnameValid = false;
@@ -69,12 +70,13 @@ const setSuccess = element => {
 
 // control entre de prénom
 fname.addEventListener("input", (e) => {
+  const regexFname = /^[a-zA-Z]+(([- ])?[a-zA-Z])+$/;
   console.log(fname.value);
   if(fname.value == ''){
     setError(fname, 'Veuillez renseigner le Prénom');
     e.preventDefault();
 }
-else if(fname.value.length <= 2){
+else if(regexFname.test(fname.value)){
   setError(fname, 'Veuillez entrer 2 caractères ou plus pour le champ du Prénom.')
   e.preventDefault();
 }else{
@@ -85,11 +87,12 @@ else if(fname.value.length <= 2){
 
 // control entre du nom
 l_name.addEventListener("input", (e) => {
-  console.log(l_name.value);
+  const regexLast = /^[a-zA-Z]+(([- ])?[a-zA-Z])+$/;
+  l_name.value = l_name.value.toUpperCase();
   if(l_name.value == ''){
     setError(l_name, 'Veuillez renseigner le Nom');
     e.preventDefault();
-  }else if(l_name.value.length <= 2){
+  }else if(regexLast.test(l_name.value)){
       setError(l_name, 'Veuillez entrer 2 caractères ou plus pour le champ du Prénom.')
       e.preventDefault();
 }else{
@@ -100,7 +103,7 @@ l_name.addEventListener("input", (e) => {
 
 // control entre de prénom
 function validEmail(email) {
-  let regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  const regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   return regexEmail.test(String(email).toLowerCase());
 };
 email.addEventListener("input", (e) => {
@@ -125,7 +128,7 @@ email.addEventListener("input", (e) => {
   }
   birthdate.addEventListener("input", (e) => {
     console.log(birthdate.value);
-     if(!validBirthday(birthdate.value)) // (!dateRegex.test(birthdate)) 
+     if(!validBirthday(birthdate.value)) 
     {
       setError(birthdate, 'Veuillez entrer une date valide');
       e.preventDefault;
@@ -148,35 +151,30 @@ email.addEventListener("input", (e) => {
 })
 
 // control ville coché
-// let j = 0;
-// for (var i = 0; i < BtnRadio.length; i++) {
-//   BtnRadio[i].addEventListener('change', function() {
 
+let city = null;
 
-//   if (BtnRadio[i].checked){
-//     j++
-//   }
-//   if(j > 0){
-//    BtnRadioValid = true;
-// }
-// else{
-//   setError(BtnRadio, 'Veuillez sélectionner une ville.')
-// } 
-// })
-// };
+for (var i = 0; i < BtnRadio.length; i++) {
+  BtnRadio[i].addEventListener('change', function() {
+    console.log("ZZZZZ ", this.value)
+    city = this.value;
+    if(city == ""){
+      setError(cityCheck, 'Veuillez choisir une ville.')
+    }else{
+      BtnRadioValid =true
+    }
+})
+};
 
 
 
 //condition d'utilisation
-function Conditions() {
-  if (CheckCondition.checked = false) {
-    setError(CheckCondition, 'Veuillez accepter les conditions d\'utilisation.');
-   
-  }else{
+CheckCondition.addEventListener('change', function() {
+  if (this.checked) {
 
     CheckConditionValid = true;
   } 
-}
+})
 
 //Abonnement newsletter
 function NewsLetter() {
@@ -188,9 +186,20 @@ function NewsLetter() {
   //submit form event if valide
 validalidation.addEventListener("submit", function(event) {
     event.preventDefault();
+
+   setError(cityCheck, 'Veuillez choisir une ville.')
+    console.log("Je suis passe ici location = ", city )
+
  if(fnameValid == "" && l_nameValid == "" && emailValid == "" && birthdateValid == "" && 
    nberQuantityValid == "" &&  CheckConditionValid == "") {
-   alert('Formulaire pas VALIDE');
+    
+   //alert('Formulaire pas VALIDEEEEEEEEEEEEEEEEEEEE');
+   setError(fname, 'Veuillez renseigner le Prénom');
+   setError(l_name, 'Veuillez renseigner le Nom');
+   setError(email, 'Veuillez renseigner votre email');
+   setError(birthdate, 'Veuillez entrer une date valide');
+   setError(nberQuantity, 'Veuillez entrer une valeur entre 0 et 99');
+   
  }else{
    //alert('Formulaire VALIDE');
    message();
@@ -214,13 +223,8 @@ thankBtn.addEventListener('click', function event() {
   closeModal();
   //Réinitialiser le formulaire
   validalidation.reset();
-  fnameValid = false;
-  l_nameValid = false;
-  emailValid = false;
-  birthdateValid = false;
-  nberQuantityValid = false;
-  BtnRadioValid = false;
-  CheckConditionValid = false
+  
+  
 });
 // end : task #4 Message de remerciement
 
