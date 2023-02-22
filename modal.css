@@ -561,6 +561,15 @@ footer {
   }
 
 }
+/* Modal Thanks */
+
+.showMoale {
+  display: block;
+}
+
+.hiddenModal {
+  display: none;
+}
 
 
 

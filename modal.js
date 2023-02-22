@@ -31,6 +31,9 @@ let nberQuantityValid = false;
 let BtnRadioValid = false;
 let CheckConditionValid = false;
 
+const thankMsg = document.getElementById('thankMsg');
+const thankBtn = document.getElementById('thankBtn');
+
 
 // launch modal event
 modalBtn.forEach((btn) => {btn.addEventListener("click", launchModal)});
@@ -65,7 +68,7 @@ const setSuccess = element => {
 }
 
 // control entre de prénom
-fname.addEventListener("change", (e) => {
+fname.addEventListener("input", (e) => {
   console.log(fname.value);
   if(fname.value == ''){
     setError(fname, 'Veuillez renseigner le Prénom');
@@ -81,11 +84,14 @@ else if(fname.value.length <= 2){
 })
 
 // control entre du nom
-l_name.addEventListener("change", (e) => {
+l_name.addEventListener("input", (e) => {
   console.log(l_name.value);
   if(l_name.value == ''){
     setError(l_name, 'Veuillez renseigner le Nom');
     e.preventDefault();
+  }else if(l_name.value.length <= 2){
+      setError(l_name, 'Veuillez entrer 2 caractères ou plus pour le champ du Prénom.')
+      e.preventDefault();
 }else{
     setSuccess(l_name);
     l_nameValid = true;
@@ -97,7 +103,7 @@ function validEmail(email) {
   let regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   return regexEmail.test(String(email).toLowerCase());
 };
-email.addEventListener("change", (e) => {
+email.addEventListener("input", (e) => {
   console.log(email.value);
   if(email.value == ''){
     setError(email, 'Veuillez renseigner votre email');
@@ -114,10 +120,10 @@ email.addEventListener("change", (e) => {
 
   // control entre de date de naissance
   function validBirthday(birthdate) {
-    let dateRegex = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/;
+    const dateRegex = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/;
     return dateRegex.test(birthdate);
   }
-  birthdate.addEventListener("change", (e) => {
+  birthdate.addEventListener("input", (e) => {
     console.log(birthdate.value);
      if(!validBirthday(birthdate.value)) // (!dateRegex.test(birthdate)) 
     {
@@ -181,16 +187,41 @@ function NewsLetter() {
 
   //submit form event if valide
 validalidation.addEventListener("submit", function(event) {
-
     event.preventDefault();
- 
-if(fnameValid === true && l_nameValid === true && emailValid === true && birthdateValid === true && 
-  nberQuantityValid === true &&  CheckConditionValid === true) {
-  alert('Formulaire VALIDE');
-}else{
-  alert('Formulaire pas VALIDE');
+ if(fnameValid == "" && l_nameValid == "" && emailValid == "" && birthdateValid == "" && 
+   nberQuantityValid == "" &&  CheckConditionValid == "") {
+   alert('Formulaire pas VALIDE');
+ }else{
+   //alert('Formulaire VALIDE');
+   message();
 }
 
 })
+
+function message() {
+  //Masquer le formulaire d'origine
+  validalidation.className = 'hiddenModal';
+  //Afficher le message et le bouton de fermeture
+  thankMsg.className = 'showMoale';
+};
+
+thankBtn.addEventListener('click', function event() {
+  //Réactiver le formulaire d'origine
+  validalidation.className = 'showMoale';
+  //Masquer le message
+  thankMsg.className = 'hiddenModal';
+  // forcer la fermuture de la modale
+  closeModal();
+  //Réinitialiser le formulaire
+  validalidation.reset();
+  fnameValid = false;
+  l_nameValid = false;
+  emailValid = false;
+  birthdateValid = false;
+  nberQuantityValid = false;
+  BtnRadioValid = false;
+  CheckConditionValid = false
+});
+// end : task #4 Message de remerciement
 
   
