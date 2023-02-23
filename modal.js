@@ -76,7 +76,7 @@ fname.addEventListener("input", (e) => {
     setError(fname, 'Veuillez renseigner le Prénom');
     e.preventDefault();
 }
-else if(regexFname.test(fname.value)){
+else if(!regexFname.test(fname.value)){
   setError(fname, 'Veuillez entrer 2 caractères ou plus pour le champ du Prénom.')
   e.preventDefault();
 }else{
@@ -92,7 +92,7 @@ l_name.addEventListener("input", (e) => {
   if(l_name.value == ''){
     setError(l_name, 'Veuillez renseigner le Nom');
     e.preventDefault();
-  }else if(regexLast.test(l_name.value)){
+  }else if(!regexLast.test(l_name.value)){
       setError(l_name, 'Veuillez entrer 2 caractères ou plus pour le champ du Prénom.')
       e.preventDefault();
 }else{
