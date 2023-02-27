@@ -10,18 +10,17 @@ function editNav() {
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
-
+const submitError = document.getElementsByClassName('modal-body')
 const validalidation = document.forms["reserve"];
-const formData = document.querySelectorAll(".formData");
+
+
 const closeBtn = document.querySelectorAll(".close");
-let msgError = document.getElementById('msgError')
 let fname = document.getElementById("fname");
 let l_name = document.getElementById("last");
 let email = document.getElementById("email");
 let birthdate = document.getElementById("birthdate");
 let nberQuantity = document.getElementById("quantity");
 let BtnRadio = document.getElementsByName('location');
-console.log("BABABABABABAAB ", BtnRadio)
 let CheckCondition = document.getElementById('checkbox1');
 let checkNewsLetter = document.getElementById('checkbox2');
 let fnameValid = false;
@@ -34,6 +33,9 @@ let CheckConditionValid = false;
 
 const thankMsg = document.getElementById('thankMsg');
 const thankBtn = document.getElementById('thankBtn');
+
+const errorSubmit = document.getElementById("errorMsg");
+
 
 
 // launch modal event
@@ -53,7 +55,7 @@ function closeModal(){
 
 // function display msg error
 const setError = (element, message) => {
-  const formData =  element.parentElement
+  const formData =  element.parentElement;
   const errorDisplay = formData.querySelector('.msgError');
   errorDisplay.innerHTML  = message;
   formData.classList.add("error")
@@ -61,7 +63,7 @@ const setError = (element, message) => {
 }
 // function input success
 const setSuccess = element => {
-  const formData =  element.parentElement
+  const formData =  element.parentElement;
   const errorDisplay = formData.querySelector('.msgError');
   errorDisplay.innerHTML  = '';
   formData.classList.add("success")
@@ -69,55 +71,54 @@ const setSuccess = element => {
 }
 
 // control entre de prénom
-fname.addEventListener("input", (e) => {
+fname.addEventListener("input", () => {
   const regexFname = /^[a-zA-Z]+(([- ])?[a-zA-Z])+$/;
   console.log(fname.value);
   if(fname.value == ''){
     setError(fname, 'Veuillez renseigner le Prénom');
-    e.preventDefault();
+    return false;
 }
 else if(!regexFname.test(fname.value)){
   setError(fname, 'Veuillez entrer 2 caractères ou plus pour le champ du Prénom.')
-  e.preventDefault();
+  return false;
 }else{
     setSuccess(fname);
-    fnameValid = true;
+    return true;
 }
 })
 
 // control entre du nom
-l_name.addEventListener("input", (e) => {
+l_name.addEventListener("input", () => {
   const regexLast = /^[a-zA-Z]+(([- ])?[a-zA-Z])+$/;
   l_name.value = l_name.value.toUpperCase();
   if(l_name.value == ''){
     setError(l_name, 'Veuillez renseigner le Nom');
-    e.preventDefault();
+    return false;
   }else if(!regexLast.test(l_name.value)){
       setError(l_name, 'Veuillez entrer 2 caractères ou plus pour le champ du Prénom.')
-      e.preventDefault();
-}else{
+      return false;
+  }else
     setSuccess(l_name);
-    l_nameValid = true;
-}
+    return true;
 })
 
 // control entre de prénom
 function validEmail(email) {
-  const regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return regexEmail.test(String(email).toLowerCase());
 };
-email.addEventListener("input", (e) => {
+email.addEventListener("input", () => {
   console.log(email.value);
   if(email.value == ''){
     setError(email, 'Veuillez renseigner votre email');
-    e.preventDefault();
+    return false;
   }
  else if (!validEmail(email.value) ){
     setError(email, 'Veuillez entrer une adresse e-mail valide.')
-    e.preventDefault();
+    return false;
   }else{
       setSuccess(email);
-      emailValid = true;
+      return true;
   }
   })
 
@@ -126,27 +127,26 @@ email.addEventListener("input", (e) => {
     const dateRegex = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/;
     return dateRegex.test(birthdate);
   }
-  birthdate.addEventListener("input", (e) => {
+  birthdate.addEventListener("input", () => {
     console.log(birthdate.value);
-     if(!validBirthday(birthdate.value)) 
-    {
+     if(!validBirthday(birthdate.value)) {
       setError(birthdate, 'Veuillez entrer une date valide');
-      e.preventDefault;
+      return flase;
     }else{
       setSuccess(birthdate);
-      birthdateValid = true;
+      return true;
     }
     })
 
     // control entre du nombre de participation
-    nberQuantity.addEventListener("change", (e) => {
+    nberQuantity.addEventListener("change", () => {
       console.log(nberQuantity.value);
   if(nberQuantity.value == ''){
     setError(nberQuantity, 'Veuillez entrer une valeur entre 0 et 99');
-    e.preventDefault();
+    return false;
 }else{
     setSuccess(nberQuantity);
-    nberQuantityValid = true;
+    return true;
 }
 })
 
@@ -156,12 +156,13 @@ let city = null;
 
 for (var i = 0; i < BtnRadio.length; i++) {
   BtnRadio[i].addEventListener('change', function() {
-    console.log("ZZZZZ ", this.value)
     city = this.value;
+   
     if(city == ""){
-      setError(cityCheck, 'Veuillez choisir une ville.')
+      setError(BtnRadio, 'Veuillez choisir une ville.')
+      return false;
     }else{
-      BtnRadioValid =true
+      return true;
     }
 })
 };
@@ -169,43 +170,69 @@ for (var i = 0; i < BtnRadio.length; i++) {
 
 
 //condition d'utilisation
-CheckCondition.addEventListener('change', function() {
-  if (this.checked) {
-
-    CheckConditionValid = true;
+ function condition() {
+  let condition = this.value;
+  if (condition.checked) {
+    return true;
   } 
-})
+}
 
 //Abonnement newsletter
 function NewsLetter() {
+  let news = this.value
   if (checkNewsLetter.checked) {
-   // checkNewsLetterValid = true;
+   return true;
   } 
   }
+  
 
   //submit form event if valide
-validalidation.addEventListener("submit", function(event) {
-    event.preventDefault();
+// validalidation.addEventListener("submit", function(event) {
+//     event.preventDefault();
 
-   setError(cityCheck, 'Veuillez choisir une ville.')
-    console.log("Je suis passe ici location = ", city )
-
- if(fnameValid == "" && l_nameValid == "" && emailValid == "" && birthdateValid == "" && 
-   nberQuantityValid == "" &&  CheckConditionValid == "") {
-    
-   //alert('Formulaire pas VALIDEEEEEEEEEEEEEEEEEEEE');
-   setError(fname, 'Veuillez renseigner le Prénom');
-   setError(l_name, 'Veuillez renseigner le Nom');
-   setError(email, 'Veuillez renseigner votre email');
-   setError(birthdate, 'Veuillez entrer une date valide');
-   setError(nberQuantity, 'Veuillez entrer une valeur entre 0 et 99');
+//  if(fname.value == "" && l_name.value == "" && email.value == "" ) {
+//     alert('Formulaire pas VALIDE');
+//     //setError(modalBtn, 'Tous les champs sont requis')
    
- }else{
-   //alert('Formulaire VALIDE');
-   message();
+//  }else{
+//    alert('Formulaire VALIDE');
+//   //  message();
+//   //  validalidation.reset();
+// }
+
+// })
+
+function isFormValid() {
+  if (!fname.value ||
+    !l_name.value ||
+    !email.value ||
+    !birthdate.value||
+    !nberQuantity ||
+    !city ||
+    !condition
+   
+    ) {
+      return false;
+  }
+
+  return true;
 }
 
+validalidation.addEventListener('submit', function(e) {
+console.log
+  e.preventDefault();
+  if (!isFormValid()) {
+    errorSubmit.innerHTML = "Veuillez renseigner tous les champs"
+    return false;
+  } else {
+    errorSubmit.innerHTML = ""
+    // submit form to server
+    alert("Form Envoyé");
+    return true;
+  }
 })
+
+
 
 function message() {
   //Masquer le formulaire d'origine

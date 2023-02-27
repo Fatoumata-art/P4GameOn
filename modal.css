@@ -186,9 +186,11 @@ main {
 }
 
 .modal-body {
+  position: relative;
   padding: 15px 8%;
   margin: 15px auto;
-  margin-top: 40px
+  margin-top: 40px;
+  min-height: 110vh;
 }
 
 label {
@@ -424,7 +426,7 @@ input[data-error]::after {
   font-size: 16px;
 }
 .hero-section {
-  min-height: 93vh;
+  min-height: 90vh;
   border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -562,6 +564,15 @@ footer {
 
 }
 /* Modal Thanks */
+#thankMsg{
+  position: absolute;
+  font-size: 2rem;
+  margin: 0;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
 
 .showMoale {
   display: block;
