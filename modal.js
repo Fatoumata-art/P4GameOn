@@ -222,12 +222,11 @@ validalidation.addEventListener('submit', function(e) {
 console.log
   e.preventDefault();
   if (!isFormValid()) {
-    errorSubmit.innerHTML = "Veuillez renseigner tous les champs"
+    errorSubmit.innerHTML = "Veuillez renseigner tous les champs";
+    errorSubmit.className = 'error'
     return false;
   } else {
-    errorSubmit.innerHTML = ""
-    // submit form to server
-    alert("Form Envoyé");
+    message()
     return true;
   }
 })

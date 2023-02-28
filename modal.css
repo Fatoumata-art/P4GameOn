@@ -564,14 +564,13 @@ footer {
 
 }
 /* Modal Thanks */
-#thankMsg{
-  position: absolute;
-  font-size: 2rem;
-  margin: 0;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+.message{
+  display: flex;
+  height: 650px;
+  text-align: center;
+  align-items: center;
+  font-size: 3rem;
+
 }
 
 .showMoale {
