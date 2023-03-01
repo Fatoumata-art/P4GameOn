@@ -10,7 +10,6 @@ function editNav() {
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
-const submitError = document.getElementsByClassName('modal-body')
 const validalidation = document.forms["reserve"];
 
 
@@ -23,20 +22,10 @@ let nberQuantity = document.getElementById("quantity");
 let BtnRadio = document.getElementsByName('location');
 let CheckCondition = document.getElementById('checkbox1');
 let checkNewsLetter = document.getElementById('checkbox2');
-let fnameValid = false;
-let l_nameValid = false;
-let emailValid = false;
-let birthdateValid = false;
-let nberQuantityValid = false;
-let BtnRadioValid = false;
-let CheckConditionValid = false;
+
 
 const thankMsg = document.getElementById('thankMsg');
 const thankBtn = document.getElementById('thankBtn');
-
-const errorSubmit = document.getElementById("errorMsg");
-
-
 
 // launch modal event
 modalBtn.forEach((btn) => {btn.addEventListener("click", launchModal)});
@@ -186,22 +175,6 @@ function NewsLetter() {
   }
   
 
-  //submit form event if valide
-// validalidation.addEventListener("submit", function(event) {
-//     event.preventDefault();
-
-//  if(fname.value == "" && l_name.value == "" && email.value == "" ) {
-//     alert('Formulaire pas VALIDE');
-//     //setError(modalBtn, 'Tous les champs sont requis')
-   
-//  }else{
-//    alert('Formulaire VALIDE');
-//   //  message();
-//   //  validalidation.reset();
-// }
-
-// })
-
 function isFormValid() {
   if (!fname.value ||
     !l_name.value ||
@@ -223,7 +196,7 @@ console.log
   e.preventDefault();
   if (!isFormValid()) {
     errorSubmit.innerHTML = "Veuillez renseigner tous les champs";
-    errorSubmit.className = 'error'
+    errorSubmit.style.color = "red";
     return false;
   } else {
     message()
@@ -252,6 +225,7 @@ thankBtn.addEventListener('click', function event() {
   
   
 });
+
 // end : task #4 Message de remerciement
 
   
