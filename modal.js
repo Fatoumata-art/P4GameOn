@@ -120,7 +120,7 @@ email.addEventListener("input", () => {
     console.log(birthdate.value);
      if(!validBirthday(birthdate.value)) {
       setError(birthdate, 'Veuillez entrer une date valide');
-      return flase;
+      return false;
     }else{
       setSuccess(birthdate);
       return true;
